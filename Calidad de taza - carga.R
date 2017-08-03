@@ -10,10 +10,10 @@ data <- data.frame(matrix(nrow = 0, ncol = length(names(data))))
 
 for(i in 1:n.archivos) {
      if(i == 1) {
-          data <- read.csv(archivos[i], sep = ";")
+          data2 <- read.csv(archivos[i], sep = ";")
      } else {
           temp <- read.csv(archivos[i], sep = ";")
-          data <- rbind(data, temp)
+          data2 <- rbind(data, temp)
      }
 }
 rm(temp)
@@ -21,7 +21,7 @@ library(dplyr)
 data <- select(data, -X)
 
 
-# INSPECCIÓN DATOS --------------------------------------------------------
+# INSPECCI?N DATOS --------------------------------------------------------
 
 sapply(data, class)
 str(data)
@@ -30,7 +30,7 @@ View(data)
 tabl <- sapply(data, table)
 
 
-# PREPARACIÓN DATOS PARA CARGAR -------------------------------------------
+# PREPARACI?N DATOS PARA CARGAR -------------------------------------------
 
 
 
