@@ -3,7 +3,7 @@
 # Conectar a Salesforce
 library(RForcecom)
 username <- "admin@andes.org"
-password <- "admgf2017#XQWRiDpPU6NzJC9Cmm185FF2"
+password <- "gfadm913XQWRiDpPU6NzJC9Cmm185FF2"
 instanceURL <- "https://taroworks-8629.cloudforce.com/"
 apiVersion <- "36.0"
 session <- rforcecom.login(username, password, instanceURL, apiVersion)
@@ -20,7 +20,8 @@ bu.muestras <- rforcecom.retrieve(session, "CQT_CoffeeSample__c",
 bu.analisis <- rforcecom.retrieve(session, "CQT_Analysis__c",
                                   campos.analisis)
 
-#Incluir fecha al nombre del archivo
+# Incluir fecha al nombre del archivo
+setwd("Datos")
 nom.bu.muestras <- paste("backup-muestras_", as.character(Sys.Date()),
                          ".csv", sep = "")
 nom.bu.analisis <- paste("backup-analisis_", as.character(Sys.Date()),
@@ -39,10 +40,9 @@ write.csv(bu.analisis, nom.bu.analisis)
 # Ingresar a este reporte en Salesforce para consultar la fecha del registro
 # más reciente creado: https://taroworks-8629.cloudforce.com/00O36000007EPdO
 
-# ATENCIÓN: ACTUALIZAR NOMBRE DE ARCHIVO QUE SE VA A CARGAR
-archivo.importar <- "exportCatacion2017-08-02_07_33_34.csv"
+# ATENCIÓN: ACTUALIZAR NOMBRE DE ARCHIVO QUE SE VA A CARGAR (archivo.importar)
+archivo.importar <- "exportCatacion2017-12-05_02_14_31.csv"
 
-setwd("Datos")
 calidad <- read.csv(archivo.importar, sep = ";",
                     encoding = "latin1")
 
@@ -123,6 +123,7 @@ batches_status <- lapply(batches_info,
                                                           jobId=x$jobId,
                                                           batchId=x$id)
                          })
+batches_status
 # Detalles de cada batch
 batches_detail <- lapply(batches_info,
                          FUN=function(x){
@@ -216,6 +217,7 @@ batches_status <- lapply(batches_info,
                                                          jobId=x$jobId,
                                                          batchId=x$id)
                          })
+batches_status
 # Detalles de cada batch
 batches_detail <- lapply(batches_info,
                          FUN=function(x){
@@ -224,5 +226,8 @@ batches_detail <- lapply(batches_info,
                                                         batchId=x$id)
                          })
 close_job_info <- rforcecom.closeBulkJob(session, jobId=job_info$id)
+
+# Validación final: estos registros deben salir en el siguiente reporte en SF:
+# https://taroworks-8629.cloudforce.com/00O36000007EPdO
 
 
